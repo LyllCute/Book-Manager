@@ -1,0 +1,17 @@
+﻿# Backend
+bookmanager-backend/vendor/
+bookmanager-backend/.env
+bookmanager-backend/storage/logs/*.log
+bookmanager-backend/storage/framework/cache/
+bookmanager-backend/storage/framework/sessions/
+bookmanager-backend/storage/framework/views/
+bookmanager-backend/node_modules/
+bookmanager-backend/public/hot
+
+# Frontend
+bookmanager-frontend/node_modules/
+bookmanager-frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+﻿import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
 import LoginScreen from "./screens/LoginScreen.jsx";
 import BookListScreen from "./screens/BookListScreen.jsx";
@@ -16,40 +16,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <Navigate to="/books" replace />
-            ) : (
-              <LoginScreen onLogin={() => setIsLoggedIn(true)} />
-            )
-          }
-        />
-        <Route
-          path="/books"
-          element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <BookListScreen />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/books/add"
-          element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <AddBookScreen />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/books/:id"
-          element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <BookDetailsScreen />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={isLoggedIn ? <Navigate to="/books" replace /> : <LoginScreen onLogin={() => setIsLoggedIn(true)} />} />
+        <Route path="/books" element={<ProtectedRoute isLoggedIn={isLoggedIn}><BookListScreen /></ProtectedRoute>} />
+        <Route path="/books/add" element={<ProtectedRoute isLoggedIn={isLoggedIn}><AddBookScreen /></ProtectedRoute>} />
+        <Route path="/books/:id" element={<ProtectedRoute isLoggedIn={isLoggedIn}><BookDetailsScreen /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
