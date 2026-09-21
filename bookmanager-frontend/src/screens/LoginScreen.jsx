@@ -1,5 +1,4 @@
-import { useState } from "react";
-import styles from "./LoginScreen.module.css";
+﻿import { useState } from "react";
 
 const CREDENTIALS = { username: "admin", password: "book123" };
 
@@ -11,34 +10,48 @@ export default function LoginScreen({ onLogin }) {
   function handleSubmit(e) {
     e.preventDefault();
     if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
-      setError("");
       onLogin();
     } else {
-      setError("Invalid username or password. Please try again.");
+      setError("Invalid username or password.");
     }
   }
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.card}>
-        <div className={styles.logo}>??</div>
-        <h1 className={styles.title}>Book Manager</h1>
-        <p className={styles.subtitle}>Sign in to your personal catalog</p>
-        <form onSubmit={handleSubmit} className={styles.form} noValidate>
-          {error && <div className={styles.errorBanner} role="alert">{error}</div>}
-          <div className={styles.fieldGroup}>
-            <label htmlFor="username" className={styles.label}>Username</label>
-            <input id="username" type="text" className={styles.input}
-              value={username} onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username" autoComplete="username" />
+    <div style={{ display: "flex", justifyContent: "center", marginTop: "80px" }}>
+      <div style={{ width: "300px", padding: "20px", border: "1px solid #ccc", background: "white" }}>
+        <h2 style={{ marginBottom: "15px" }}>Book Manager Login</h2>
+
+        {error && <p style={{ color: "red", marginBottom: "10px", fontSize: "14px" }}>{error}</p>}
+
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: "10px" }}>
+            <label style={{ display: "block", marginBottom: "4px" }}>Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter username"
+              style={{ width: "100%", padding: "6px", fontSize: "14px" }}
+            />
           </div>
-          <div className={styles.fieldGroup}>
-            <label htmlFor="password" className={styles.label}>Password</label>
-            <input id="password" type="password" className={styles.input}
-              value={password} onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password" autoComplete="current-password" />
+
+          <div style={{ marginBottom: "10px" }}>
+            <label style={{ display: "block", marginBottom: "4px" }}>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              style={{ width: "100%", padding: "6px", fontSize: "14px" }}
+            />
           </div>
-          <button type="submit" className={styles.submitBtn}>Sign In</button>
+
+          <button
+            type="submit"
+            style={{ width: "100%", padding: "8px", background: "#3a86ff", color: "white", border: "none", cursor: "pointer" }}
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>

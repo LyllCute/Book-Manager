@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./BookDetailsScreen.module.css";
 
 const API_BASE = "http://localhost:8000/api/books";
 
@@ -13,15 +12,15 @@ export default function BookDetailsScreen() {
 
   useEffect(() => {
     async function fetchBook() {
-      setLoading(true); setError("");
+      setLoading(true);
+      setError("");
       try {
         const res = await fetch(API_BASE + "/" + id);
-        if (res.status === 404) throw new Error("Book not found.");
-        if (!res.ok) throw new Error("Server error: " + res.status);
+        if (!res.ok) throw new Error("Book not found.");
         const data = await res.json();
         setBook(data);
       } catch (err) {
-        setError(err.message || "Failed to load book details.");
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -30,50 +29,52 @@ export default function BookDetailsScreen() {
   }, [id]);
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <button className={styles.backBtn} onClick={() => navigate("/books")} aria-label="Back to book list">?</button>
-        <h1 className={styles.headerTitle}>Book Details</h1>
-      </header>
-      <main className={styles.main}>
-        {loading && (
-          <div className={styles.centered}>
-            <div className={styles.spinner} aria-label="Loading" />
-            <p className={styles.loadingText}>Loading?</p>
-          </div>
-        )}
-        {!loading && error && (
-          <div className={styles.errorBox} role="alert">
-            <span>?? {error}</span>
-            <button className={styles.backLink} onClick={() => navigate("/books")}>? Back to list</button>
-          </div>
-        )}
-        {!loading && !error && book && (
-          <div className={styles.card}>
-            <div className={styles.bookEmoji}>??</div>
-            <h2 className={styles.bookTitle}>{book.title}</h2>
-            <div className={styles.detailsGrid}>
-              <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>Author</span>
-                <span className={styles.detailValue}>{book.author}</span>
-              </div>
-              <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>Genre</span>
-                <span className={styles.genreBadge}>{book.genre}</span>
-              </div>
-              <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>Added</span>
-                <span className={styles.detailValue}>
-                  {new Date(book.created_at).toLocaleDateString("en-US", {
-                    year: "numeric", month: "long", day: "numeric"
-                  })}
-                </span>
-              </div>
-            </div>
-            <button className={styles.backFullBtn} onClick={() => navigate("/books")}>? Back to My Books</button>
-          </div>
-        )}
-      </main>
+    <div style={{ maxWidth: "500px", margin: "30px auto", padding: "0 20px" }}>
+      <button
+        onClick={() => navigate("/books")}
+        style={{ padding: "6px 14px", cursor: "pointer", background: "#ccc", border: "none", marginBottom: "15px" }}
+      >
+        &larr; Back
+      </button>
+
+      <h2 style={{ marginBottom: "15px" }}>Book Details</h2>
+
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
+
+      {!loading && !error && book && (
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <tbody>
+            <tr>
+              <th style={thStyle}>Title</th>
+              <td style={tdStyle}>{book.title}</td>
+            </tr>
+            <tr>
+              <th style={thStyle}>Author</th>
+              <td style={tdStyle}>{book.author}</td>
+            </tr>
+            <tr>
+              <th style={thStyle}>Genre</th>
+              <td style={tdStyle}>{book.genre}</td>
+            </tr>
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
+
+const thStyle = {
+  border: "1px solid #ccc",
+  padding: "10px",
+  background: "#f0f0f0",
+  textAlign: "left",
+  width: "30%",
+  fontSize: "14px"
+};
+
+const tdStyle = {
+  border: "1px solid #ccc",
+  padding: "10px",
+  fontSize: "14px"
+};
